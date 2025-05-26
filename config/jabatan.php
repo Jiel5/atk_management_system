@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'Panitera Pengadilan Negeri Kudus',
+    'Panitera Muda Hukum Pengadilan Negeri Kudus',
+    'Panitera Muda Perdata Pengadilan Negeri Kudus',
+    'Panitera Muda Pidana Pengadilan Negeri Kudus',
+    'Panitera Pengganti Pengadilan Negeri Kudus',
+    'Juru Sita Pengadilan Negeri Kudus',
+    'Klerek – Analis Perkara Peradilan, Panitera Muda Perdata',
+    'Klerek – Pengelola Penanganan Perkara, Panitera Muda Pidana',
+    'Klerek – Analis Perkara Peradilan, Panitera Muda Pidana',
+    'Ketua Pengadilan Negeri Kudus',
+    'Hakim Pengadilan Negeri Kudus',
+    'Sekretaris Pengadilan Negeri Kudus',
+    'Kepala Sub Bagian Perencanaan, Teknologi Informasi, dan Pelaporan',
+    'Kepala Sub Bagian Umum dan Keuangan Pengadilan Negeri Kudus',
+    'Kepala Sub Bagian Kepegawaian, Organisasi, dan Tata Laksana',
+    'Klerek – Pengolah Data dan Informasi, Sub Bagian Kepegawaian',
+    'Klerek – Pengadministrasi Perkantoran, Sub Bagian Umum dan Keuangan',
+    'Klerek – Penelaah Teknis Kebijakan, Sub Bagian Perencanaan',
+    'Klerek – Pengolah Data dan Informasi, Sub Bagian Umum dan Keuangan',
+    'Klerek – Analis Perkara Peradilan',
+    'Honorer / Satpam',
+    'Honorer / Sopir',
+    'Honorer / Pramubakti',
+];
