@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pemasukan_atk', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('atk_id')->constrained('atk')->onDelete('cascade');
+        Schema::create('stok_atk', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('atk_id')->index('stok_atk_atk_id_foreign');
             $table->integer('jumlah');
-            $table->foreignId('satuan_id')->constrained('satuan')->onDelete('cascade');
-            $table->decimal('total_biaya', 15, 2);
+            $table->unsignedBigInteger('satuan_id')->index('stok_atk_satuan_id_foreign');
+            $table->decimal('harga_per_unit', 12);
             $table->date('tanggal_masuk');
-            $table->text('keterangan')->nullable();
             $table->timestamps();
-        });        
+        });
     }
 
     /**
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pemasukan_atk');
+        Schema::dropIfExists('stok_atk');
     }
 };

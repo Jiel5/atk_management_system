@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permintaan_atk', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->index('permintaan_atk_user_id_foreign');
             $table->enum('status', ['menunggu', 'disetujui', 'ditolak'])->default('menunggu');
             $table->text('catatan')->nullable();
             $table->timestamps();
-        });        
+        });
     }
 
     /**

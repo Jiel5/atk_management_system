@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengeluaran_atk', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('atk_id')->constrained('atk')->onDelete('cascade');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('atk_id')->index('pengeluaran_atk_atk_id_foreign');
             $table->integer('jumlah');
-            $table->foreignId('satuan_id')->constrained('satuan')->onDelete('cascade');
-            $table->decimal('harga_per_unit', 12, 2);
+            $table->unsignedBigInteger('satuan_id')->index('pengeluaran_atk_satuan_id_foreign');
+            $table->decimal('harga_per_unit', 12);
             $table->date('tanggal_keluar');
             $table->timestamps();
-        });        
+        });
     }
 
     /**

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('atk', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_atk');
-            $table->foreignId('kategori_id')->constrained('kategori')->onDelete('cascade');
+        Schema::create('satuan', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('nama_satuan');
             $table->timestamps();
-        });        
+        });
     }
 
     /**
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('atk');
+        Schema::dropIfExists('satuan');
     }
 };

@@ -15,9 +15,10 @@ class UserSeeder extends Seeder
             'username' => 'bendahara',
             'email' => 'bendahara@example.com',
             'password' => Hash::make('password'),
-            'jabatan' => 'Bendahara',
-            'divisi' => 'Keuangan',
+            'jabatan' => 'Panitera Pengadilan Negeri Kudus',
             'role' => 'bendahara',
+            'nip' => '1234567890',
+            'no_hp' => '081234567890',
         ]);
 
         User::create([
@@ -25,10 +26,10 @@ class UserSeeder extends Seeder
             'username' => 'user1',
             'email' => 'user1@example.com',
             'password' => Hash::make('password'),
-            'jabatan' => 'Staff',
-            'divisi' => 'Umum',
+            'jabatan' => 'Panitera Pengadilan Negeri Kudus',
             'role' => 'user',
+            'nip' => '0987654321',
+            'no_hp' => '089876543210',
         ]);
     }
 }
-

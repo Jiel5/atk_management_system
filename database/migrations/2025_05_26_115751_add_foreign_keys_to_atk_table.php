@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kategori', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_kategori');
-            $table->timestamps();
-        });        
+        Schema::table('atk', function (Blueprint $table) {
+            $table->foreign(['kategori_id'])->references(['id'])->on('kategori')->onUpdate('restrict')->onDelete('cascade');
+        });
     }
 
     /**
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategori');
+        Schema::table('atk', function (Blueprint $table) {
+            $table->dropForeign('atk_kategori_id_foreign');
+        });
     }
 };

@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('satuan', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_satuan');
-            $table->timestamps();
-        });        
+        Schema::table('permintaan_atk', function (Blueprint $table) {
+            $table->foreign(['user_id'])->references(['id'])->on('users')->onUpdate('restrict')->onDelete('cascade');
+        });
     }
 
     /**
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('satuan');
+        Schema::table('permintaan_atk', function (Blueprint $table) {
+            $table->dropForeign('permintaan_atk_user_id_foreign');
+        });
     }
 };
