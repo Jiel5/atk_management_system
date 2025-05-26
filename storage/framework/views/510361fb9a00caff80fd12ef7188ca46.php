@@ -6,4 +6,4 @@
         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
                 class="mdi mdi-heart text-danger"></i></span>
     </div>
-</footer><?php /**PATH D:\JIHAN DOC\Project Portofolio\atk-management\resources\views/layouts/partials/footer.blade.php ENDPATH**/ ?>
+</footer><?php /**PATH D:\JIHAN DOC\Project Portofolio\atk-management-system\resources\views/layouts/partials/footer.blade.php ENDPATH**/ ?>

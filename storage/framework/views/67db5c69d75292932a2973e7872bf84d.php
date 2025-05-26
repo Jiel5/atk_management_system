@@ -21,20 +21,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        .navbar-brand img {
-            height: 60px !important;
-            width: auto !important;
-            object-fit: contain;
-        }
-
-        .navbar-brand-wrapper {
-            padding-right: 0 !important;
-            margin-right: 0 !important;
-        }
-    </style>
-
-
 </head>
 
 <body>
@@ -85,4 +71,4 @@
     <?php echo $__env->yieldContent('scripts'); ?>
 </body>
 
-</html><?php /**PATH D:\JIHAN DOC\Project Portofolio\atk-management\resources\views/layouts/app.blade.php ENDPATH**/ ?>
+</html><?php /**PATH D:\JIHAN DOC\Project Portofolio\atk-management-system\resources\views/layouts/app.blade.php ENDPATH**/ ?>

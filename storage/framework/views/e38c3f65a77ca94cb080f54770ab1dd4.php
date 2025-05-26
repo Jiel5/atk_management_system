@@ -130,4 +130,4 @@
         <?php endif; ?>
 
     </ul>
-</nav><?php /**PATH D:\JIHAN DOC\Project Portofolio\atk-management\resources\views/layouts/partials/sidebar.blade.php ENDPATH**/ ?>
+</nav><?php /**PATH D:\JIHAN DOC\Project Portofolio\atk-management-system\resources\views/layouts/partials/sidebar.blade.php ENDPATH**/ ?>
