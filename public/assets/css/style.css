@@ -26305,11 +26305,6 @@ dl li {
 /* Jangan ubah container dan content-wrapper */
 
 
-.content-wrapper {
-    padding-top: 20px;
-    /* Tambah jarak dari top */
-}
-
 .modern-card {
     border: none;
     border-radius: 16px;
