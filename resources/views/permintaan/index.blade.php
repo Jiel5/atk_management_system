@@ -85,9 +85,7 @@
                                 <th class="border-0 py-3"><small class="text-muted fw-semibold">NIP</small></th>
                                 <th class="border-0 py-3"><small class="text-muted fw-semibold">STATUS</small></th>
                                 <th class="border-0 py-3"><small class="text-muted fw-semibold">DETAIL ATK</small></th>
-                                @if(auth()->user()->role !== 'user')
-                                    <th class="border-0 py-3"><small class="text-muted fw-semibold">AKSI</small></th>
-                                @endif
+                                <th class="border-0 py-3"><small class="text-muted fw-semibold">AKSI</small></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,6 +159,15 @@
                                                         <button type="submit" class="btn btn-danger btn-sm"
                                                             onclick="return confirm('Tolak permintaan ini?')">
                                                             <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </form>
+                                                @elseif(auth()->user()->role === 'user' && $item->status === 'menunggu')
+                                                    <form action="{{ route('permintaan.batal', $item->id) }}" method="POST" class="d-inline"
+                                                        onsubmit="return confirm('Yakin ingin membatalkan permintaan ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                                            <i class="fas fa-times"></i> Batalkan
                                                         </button>
                                                     </form>
                                                 @endif
@@ -292,7 +299,7 @@
                     @else
                             { orderable: false, targets: [0, 5, 6] } // No, Detail ATK, dan Aksi columns tidak bisa disort untuk non-user
                         @endif
-                                                    ]
+                                                        ]
             });
 
             // Filter by status

@@ -107,4 +107,21 @@ class PermintaanAtkController extends Controller
         return view('permintaan.riwayat', compact('permintaan'));
     }
 
+    public function batal($id)
+    {
+        $permintaan = PermintaanAtk::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->where('status', 'menunggu')
+            ->firstOrFail();
+
+        // Hapus detail permintaan terlebih dahulu
+        $permintaan->detailPermintaan()->delete();
+
+        // Hapus permintaan utama
+        $permintaan->delete();
+
+        return redirect()->route('permintaan.index')->with('success', 'Permintaan berhasil dibatalkan.');
+    }
+
+
 }

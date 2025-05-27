@@ -62,7 +62,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/permintaan/create', [PermintaanAtkController::class, 'create'])->name('permintaan.create');
     Route::post('/permintaan', [PermintaanAtkController::class, 'store'])->name('permintaan.store');
     Route::get('/riwayat', [PermintaanAtkController::class, 'riwayat'])->name('permintaan.riwayat');
+    Route::delete('/permintaan/{id}/batal', [PermintaanAtkController::class, 'batal'])->name('permintaan.batal');
 });
+
 
 // ============ BENDAHARA SAJA ============
 Route::middleware(['auth', 'role:bendahara'])->group(function () {
