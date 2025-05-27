@@ -33,7 +33,7 @@
                                 <td>{{ ucfirst($p->status) }}</td>
                                 <td>
                                     <ul>
-                                        @foreach($p->detail as $d)
+                                        @foreach($p->detailPermintaan as $d)
                                             <li>{{ $d->atk->nama_atk }} - {{ $d->jumlah }} {{ $d->satuan->nama_satuan }}</li>
                                         @endforeach
                                     </ul>

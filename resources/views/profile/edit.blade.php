@@ -154,46 +154,4 @@
             </div>
         </div>
     </div>
-
-    <style>
-        .form-control:focus {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
-        }
-
-        .form-control.bg-light:focus {
-            background-color: #f8f9fa !important;
-        }
-
-        .card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%);
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
-            transform: translateY(-1px);
-        }
-
-        .alert-success {
-            border-left: 4px solid #198754;
-        }
-
-        @media (max-width: 768px) {
-            .container-fluid {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-        }
-    </style>
 @endsection

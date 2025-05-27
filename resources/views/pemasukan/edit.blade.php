@@ -172,37 +172,4 @@
             </div>
         </div>
     </div>
-
-    <style>
-        .form-select:focus,
-        .form-control:focus {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, #ffc107, #ffab00);
-            border: none;
-        }
-
-        .btn-warning:hover {
-            background: linear-gradient(135deg, #ffab00, #ff8f00);
-            transform: translateY(-1px);
-        }
-
-        .is-invalid {
-            border-color: #dc3545;
-        }
-
-        .invalid-feedback {
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .d-flex.justify-content-between {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    </style>
 @endsection

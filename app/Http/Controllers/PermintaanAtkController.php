@@ -17,14 +17,9 @@ class PermintaanAtkController extends Controller
 {
     public function index()
     {
-        $permintaan = auth()->user()->role === 'user'
-            ? PermintaanAtk::with('detailPermintaan.atk', 'detailPermintaan.satuan')
-                ->where('user_id', auth()->id())
-                ->latest()
-                ->get()
-            : PermintaanAtk::with('user', 'detailPermintaan.atk', 'detailPermintaan.satuan')
-                ->latest()
-                ->get();
+        $permintaan = PermintaanAtk::with('user', 'detailPermintaan.atk', 'detailPermintaan.satuan')
+            ->latest()
+            ->get();
 
         return view('permintaan.index', compact('permintaan'));
     }

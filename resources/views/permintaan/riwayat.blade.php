@@ -155,39 +155,4 @@
             });
         });
     </script>
-
-    <style>
-        /* Padding DataTables */
-        .dataTables_wrapper {
-            padding-top: 1rem;
-        }
-
-        /* Tabel bisa discroll horizontal jika overflow */
-        .table-responsive {
-            overflow-x: auto;
-            border: none;
-        }
-
-        /* Jarak antar komponen DataTables */
-        .dataTables_wrapper .row {
-            margin-bottom: 0.75rem;
-        }
-
-        /* Responsif sederhana untuk layar kecil */
-        @media (max-width: 768px) {
-
-            .dataTables_wrapper .dataTables_length,
-            .dataTables_wrapper .dataTables_filter {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-                margin-bottom: 1rem;
-            }
-
-            .dataTables_wrapper .dataTables_filter input {
-                width: 100%;
-            }
-        }
-    </style>
-
 @endsection

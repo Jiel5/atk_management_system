@@ -26287,11 +26287,10 @@ dl li {
   flex-grow: 1;
 }
 
-
 /* STYLE CUSTOM */
 
 .navbar-brand img {
-    height: 60px !important;
+    height: 70px !important;
     width: auto !important;
     object-fit: contain;
 }
@@ -26425,9 +26424,181 @@ dl li {
     max-width: calc(33.333% - 0.67rem);
 }
 
-/* RESPONSIVE */
+/* DATATABLES STYLING */
 
-@media (max-width: 768px) {
+.table tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.03);
+    transition: background-color 0.2s ease;
+}
+
+.dataTables_wrapper {
+    padding-top: 1rem;
+}
+
+.dataTables_wrapper .row {
+    margin-bottom: 0.75rem;
+}
+
+.btn-sm:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border: none;
+}
+
+/* CARD STYLING */
+
+.card {
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-outline-secondary.rounded-pill {
+    border-color: #e9ecef;
+    color: #6c757d;
+}
+
+.btn-outline-secondary.rounded-pill:hover {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.badge.bg-opacity-10 {
+    font-weight: 500;
+    letter-spacing: 0.025em;
+}
+
+/* MOBILE CARD */
+
+.mobile-card {
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.mobile-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* BUTTON STYLING */
+
+.btn-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+    transform: translateY(-1px);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107, #ffab00);
+    border: none;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #ffab00, #ff8f00);
+    transform: translateY(-1px);
+}
+
+/* FORM STYLING */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+}
+
+.form-control.bg-light:focus {
+    background-color: #f8f9fa !important;
+}
+
+/* VALIDATION */
+
+.is-invalid {
+    border-color: #dc3545;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+/* ALERT */
+
+.alert-success {
+    border-left: 4px solid #198754;
+}
+
+/* ANIMATIONS */
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.animate-slide-up {
+    animation: slideInUp 0.6s ease-out both;
+}
+
+.animate-delay-1 { animation-delay: 0.1s; }
+.animate-delay-2 { animation-delay: 0.2s; }
+.animate-delay-3 { animation-delay: 0.3s; }
+.animate-delay-4 { animation-delay: 0.4s; }
+.animate-delay-5 { animation-delay: 0.5s; }
+.animate-delay-6 { animation-delay: 0.6s; }
+
+/* SMOOTH TRANSITIONS */
+
+.card, .badge, .mobile-card {
+    transition: all 0.2s ease-in-out;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 767.98px) {
+    .container, .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
     .stats-grid .col-stat {
         max-width: 100%;
         margin-bottom: 1rem;
@@ -26459,6 +26630,15 @@ dl li {
         width: 100%;
     }
 
+    .dataTables_wrapper .dataTables_paginate {
+        text-align: center;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
     .row.g-3 .col-md-4 {
         margin-bottom: 1rem;
     }
@@ -26466,6 +26646,39 @@ dl li {
     .d-flex.gap-1 {
         flex-direction: column;
         gap: 0.25rem !important;
+    }
+
+    .form-select,
+    .btn {
+        min-height: 38px;
+    }
+
+    .form-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+    }
+
+    .fas {
+        font-size: 0.8rem;
+    }
+
+    .mb-3 {
+        margin-bottom: 0.75rem !important;
+    }
+
+    .p-3 {
+        padding: 0.75rem !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .container-fluid {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
 }
 
@@ -26476,217 +26689,5 @@ dl li {
     }
 }
 
-/* ANIMATIONS */
-
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-slide-up {
-    animation: slideInUp 0.6s ease-out both;
-}
-
-.animate-delay-1 { animation-delay: 0.1s; }
-.animate-delay-2 { animation-delay: 0.2s; }
-.animate-delay-3 { animation-delay: 0.3s; }
-.animate-delay-4 { animation-delay: 0.4s; }
-.animate-delay-5 { animation-delay: 0.5s; }
-.animate-delay-6 { animation-delay: 0.6s; }
-
-/* DATATABLES STYLING */
-
-.table tbody tr:hover {
-    background-color: rgba(13, 110, 253, 0.03);
-    transition: background-color 0.2s ease;
-}
-
-.dataTables_wrapper {
-    padding-top: 1rem;
-}
-
-.dataTables_wrapper .row {
-    margin-bottom: 0.75rem;
-}
-
-.btn-sm:hover {
-    transform: translateY(-1px);
-    transition: transform 0.2s ease;
-}
-
-.form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-}
-
-.btn-outline-secondary:hover {
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-.table tbody tr:hover {
-    background-color: rgba(13, 110, 253, 0.03);
-    transition: background-color 0.2s ease;
-}
-
-/* Padding DataTables */
-.dataTables_wrapper {
-    padding-top: 1rem;
-}
-
-/* Jarak antar komponen DataTables */
-.dataTables_wrapper .row {
-    margin-bottom: 0.75rem;
-}
-
-/* Hover effect untuk tombol aksi */
-.btn-sm:hover {
-    transform: translateY(-1px);
-    transition: transform 0.2s ease;
-}
-
-/* Style untuk filter form */
-.form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-}
-
-.btn-outline-secondary:hover {
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .d-flex.justify-content-between {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .dataTables_wrapper .dataTables_length,
-    .dataTables_wrapper .dataTables_filter {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .dataTables_wrapper .dataTables_filter input {
-        width: 100%;
-    }
-
-    /* Mobile responsive untuk filter */
-    .row.g-3 .col-md-4 {
-        margin-bottom: 1rem;
-    }
-
-    /* Mobile responsive untuk aksi */
-    .d-flex.gap-1 {
-        flex-direction: column;
-        gap: 0.25rem !important;
-    }
-}
-
-.table tbody tr:hover {
-    background-color: rgba(13, 110, 253, 0.03);
-    transition: background-color 0.2s ease;
-}
-
-/* Padding DataTables */
-.dataTables_wrapper {
-    padding-top: 1rem;
-}
-
-/* Jarak antar komponen DataTables */
-.dataTables_wrapper .row {
-    margin-bottom: 0.75rem;
-}
-
-/* Hover effect untuk tombol aksi */
-.btn-sm:hover {
-    transform: translateY(-1px);
-    transition: transform 0.2s ease;
-}
-
-/* Style untuk filter form */
-.form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-}
-
-.btn-outline-secondary:hover {
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-/* Scroll horizontal untuk tabel */
-.table-responsive {
-    overflow-x: auto;
-    border: none;
-}
-
-/* Styling tambahan */
-.card {
-    border-radius: 12px;
-}
-
-.btn-outline-secondary.rounded-pill {
-    border-color: #e9ecef;
-    color: #6c757d;
-}
-
-.btn-outline-secondary.rounded-pill:hover {
-    background-color: #f8f9fa;
-    border-color: #dee2e6;
-}
-
-.badge.bg-opacity-10 {
-    font-weight: 500;
-    letter-spacing: 0.025em;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .d-flex.justify-content-between {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .dataTables_wrapper .dataTables_length,
-    .dataTables_wrapper .dataTables_filter {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .dataTables_wrapper .dataTables_filter input {
-        width: 100%;
-    }
-
-    .row.g-3 .col-md-4 {
-        margin-bottom: 1rem;
-    }
-
-    .d-flex.gap-1 {
-        flex-direction: column;
-        gap: 0.25rem !important;
-    }
-}
 
 

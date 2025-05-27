@@ -139,25 +139,30 @@
                                                 </a>
                                                 @if(auth()->user()->role === 'bendahara' && $p->status === 'menunggu')
                                                     {{-- Form Setujui --}}
-                                                    <form action="{{ route('verifikasi.permintaan', $p->id) }}" method="POST" style="display:inline;">
-    @csrf
-    <input type="hidden" name="aksi" value="approve">
-    <input type="hidden" name="catatan" value="Disetujui tanpa catatan"> {{-- Optional --}}
-    <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Setujui permintaan ini?')">
-        <i class="fas fa-check"></i>
-    </button>
-</form>
-
+                                                    <form action="{{ route('verifikasi.permintaan', $p->id) }}" method="POST"
+                                                        style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="aksi" value="approve">
+                                                        <input type="hidden" name="catatan" value="Disetujui tanpa catatan"> {{-- Optional
+                                                        --}}
+                                                        <button type="submit" class="btn btn-success btn-sm"
+                                                            onclick="return confirm('Setujui permintaan ini?')">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    </form>
 
                                                     {{-- Form Tolak --}}
-                                                    <form action="{{ route('verifikasi.permintaan', $p->id) }}" method="POST" style="display:inline;">
-    @csrf
-    <input type="hidden" name="aksi" value="reject">
-    <input type="hidden" name="catatan" value="Ditolak karena alasan tertentu"> {{-- Optional --}}
-    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tolak permintaan ini?')">
-        <i class="fas fa-times"></i>
-    </button>
-</form>
+                                                    <form action="{{ route('verifikasi.permintaan', $p->id) }}" method="POST"
+                                                        style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="aksi" value="reject">
+                                                        <input type="hidden" name="catatan" value="Ditolak karena alasan tertentu"> {{--
+                                                        Optional --}}
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Tolak permintaan ini?')">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </form>
                                                 @endif
                                             </div>
                                         </td>
@@ -287,7 +292,7 @@
                     @else
                             { orderable: false, targets: [0, 5, 6] } // No, Detail ATK, dan Aksi columns tidak bisa disort untuk non-user
                         @endif
-                                                ]
+                                                    ]
             });
 
             // Filter by status
