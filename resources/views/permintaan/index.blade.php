@@ -104,129 +104,92 @@
                                     <td class="py-3">{{ $p->user->nama }}</td>
                                     <td class="py-3"><span class="text-muted">{{ $p->user->nip }}</span></td>
                                     <td class="py-3">
-                                        @php
-                                            $statusClass = [
-                                                'menunggu' => 'warning',
-                                                'disetujui' => 'success',
-                                                'ditolak' => 'danger'
-                                            ];
-                                            $statusIcon = [
-                                                'menunggu' => 'clock',
-                                                'disetujui' => 'check-circle',
-                                                'ditolak' => 'times-circle'
-                                            ];
-                                            $class = $statusClass[$p->status] ?? 'secondary';
-                                            $icon = $statusIcon[$p->status] ?? 'question';
-                                        @endphp
-                                        <span
-                                            class="badge bg-{{ $class }} bg-opacity-10 text-{{ $class }} px-3 py-2 rounded-pill border border-{{ $class }} border-opacity-25">
-                                            <i class="fas fa-{{ $icon }} me-1"></i> {{ ucfirst($p->status) }}
-                                        </span>
+                                        @if(auth()->user()->role === 'bendahara' && $p->status === 'menunggu')
+                                            {{-- Tombol setujui & tolak --}}
+                                            <form action="{{ route('verifikasi.permintaan', $p->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                <input type="hidden" name="aksi" value="approve">
+                                                <input type="hidden" name="catatan" value="Disetujui tanpa catatan">
+                                                <button type="submit" class="btn btn-success btn-sm"
+                                                    onclick="return confirm('Setujui permintaan ini?')">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('verifikasi.permintaan', $p->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                <input type="hidden" name="aksi" value="reject">
+                                                <input type="hidden" name="catatan" value="Ditolak karena alasan tertentu">
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Tolak permintaan ini?')">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </form>
+                                        @elseif(auth()->user()->role === 'user' && $p->status === 'menunggu')
+                                            {{-- Tombol batal --}}
+                                            <form action="{{ route('permintaan.batal', $p->id) }}" method="POST" class="d-inline"
+                                                onsubmit="return confirm('Yakin ingin membatalkan permintaan ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                                    <i class="fas fa-times"></i> Batalkan
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
-                                    <td class="py-3">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3"
-                                            data-bs-toggle="modal" data-bs-target="#detailModal{{ $p->id }}">
-                                            <i class="fas fa-eye me-1"></i> Lihat Item ({{ $p->detailPermintaan->count() }})
-                                        </button>
-                                    </td>
-                                    @if(auth()->user()->role !== 'user')
-                                        <td class="py-3">
-                                            <div class="btn-group" role="group">
-                                                <a href="{{ route('verifikasi.show', $p->id) }}" class="btn btn-info btn-sm">
-                                                    <i class="fas fa-search"></i> Detail
-                                                </a>
-                                                @if(auth()->user()->role === 'bendahara' && $p->status === 'menunggu')
-                                                    {{-- Form Setujui --}}
-                                                    <form action="{{ route('verifikasi.permintaan', $p->id) }}" method="POST"
-                                                        style="display:inline;">
-                                                        @csrf
-                                                        <input type="hidden" name="aksi" value="approve">
-                                                        <input type="hidden" name="catatan" value="Disetujui tanpa catatan"> {{-- Optional
-                                                        --}}
-                                                        <button type="submit" class="btn btn-success btn-sm"
-                                                            onclick="return confirm('Setujui permintaan ini?')">
-                                                            <i class="fas fa-check"></i>
+                                    <!-- Modal Detail masih dipakai untuk lihat detail ATK -->
+                                    <div class="modal fade" id="detailModal{{ $p->id }}" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Detail ATK - {{ $p->user->nama }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-group">
+                                                        @foreach($p->detailPermintaan as $d)
+                                                            <li
+                                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                                {{ $d->atk->nama_atk }}
+                                                                <span class="badge bg-primary rounded-pill">
+                                                                    {{ $d->jumlah }} {{ $d->satuan->nama_satuan }}
+                                                                </span>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{ route('permintaan.cetak') }}" method="GET" class="d-inline"
+                                                        target="_blank">
+                                                        <input type="hidden" name="tanggal_mulai"
+                                                            value="{{ $p->created_at->format('Y-m-d') }}">
+                                                        <input type="hidden" name="tanggal_akhir"
+                                                            value="{{ $p->created_at->format('Y-m-d') }}">
+                                                        <input type="hidden" name="status" value="{{ $p->status }}">
+                                                        <input type="hidden" name="format" value="pdf">
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-file-pdf"></i> PDF
                                                         </button>
                                                     </form>
-
-                                                    {{-- Form Tolak --}}
-                                                    <form action="{{ route('verifikasi.permintaan', $p->id) }}" method="POST"
-                                                        style="display:inline;">
-                                                        @csrf
-                                                        <input type="hidden" name="aksi" value="reject">
-                                                        <input type="hidden" name="catatan" value="Ditolak karena alasan tertentu"> {{--
-                                                        Optional --}}
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Tolak permintaan ini?')">
-                                                            <i class="fas fa-times"></i>
+                                                    <form action="{{ route('permintaan.cetak') }}" method="GET" class="d-inline"
+                                                        target="_blank">
+                                                        <input type="hidden" name="tanggal_mulai"
+                                                            value="{{ $p->created_at->format('Y-m-d') }}">
+                                                        <input type="hidden" name="tanggal_akhir"
+                                                            value="{{ $p->created_at->format('Y-m-d') }}">
+                                                        <input type="hidden" name="status" value="{{ $p->status }}">
+                                                        <input type="hidden" name="format" value="excel">
+                                                        <button type="submit" class="btn btn-success btn-sm">
+                                                            <i class="fas fa-file-excel"></i> Excel
                                                         </button>
                                                     </form>
-                                                @elseif(auth()->user()->role === 'user' && $p->status === 'menunggu')
-                                                    <form action="{{ route('permintaan.batal', $p->id) }}" method="POST" class="d-inline"
-                                                        onsubmit="return confirm('Yakin ingin membatalkan permintaan ini?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
-                                                            <i class="fas fa-times"></i> Batalkan
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    @endif
-                                </tr>
-
-                                <!-- Modal Detail masih dipakai untuk lihat detail ATK -->
-                                <div class="modal fade" id="detailModal{{ $p->id }}" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Detail ATK - {{ $p->user->nama }}</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <ul class="list-group">
-                                                    @foreach($p->detailPermintaan as $d)
-                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                            {{ $d->atk->nama_atk }}
-                                                            <span class="badge bg-primary rounded-pill">
-                                                                {{ $d->jumlah }} {{ $d->satuan->nama_satuan }}
-                                                            </span>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <form action="{{ route('permintaan.cetak') }}" method="GET" class="d-inline"
-                                                    target="_blank">
-                                                    <input type="hidden" name="tanggal_mulai"
-                                                        value="{{ $p->created_at->format('Y-m-d') }}">
-                                                    <input type="hidden" name="tanggal_akhir"
-                                                        value="{{ $p->created_at->format('Y-m-d') }}">
-                                                    <input type="hidden" name="status" value="{{ $p->status }}">
-                                                    <input type="hidden" name="format" value="pdf">
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <i class="fas fa-file-pdf"></i> PDF
-                                                    </button>
-                                                </form>
-                                                <form action="{{ route('permintaan.cetak') }}" method="GET" class="d-inline"
-                                                    target="_blank">
-                                                    <input type="hidden" name="tanggal_mulai"
-                                                        value="{{ $p->created_at->format('Y-m-d') }}">
-                                                    <input type="hidden" name="tanggal_akhir"
-                                                        value="{{ $p->created_at->format('Y-m-d') }}">
-                                                    <input type="hidden" name="status" value="{{ $p->status }}">
-                                                    <input type="hidden" name="format" value="excel">
-                                                    <button type="submit" class="btn btn-success btn-sm">
-                                                        <i class="fas fa-file-excel"></i> Excel
-                                                    </button>
-                                                </form>
-                                                <button type="button" class="btn btn-secondary btn-sm"
-                                                    data-bs-dismiss="modal">Tutup</button>
+                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                        data-bs-dismiss="modal">Tutup</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
                             @endforeach
                         </tbody>
@@ -298,7 +261,7 @@
                     @else
                             { orderable: false, targets: [0, 5, 6] } // No, Detail ATK, dan Aksi columns tidak bisa disort untuk non-user
                         @endif
-                                                                ]
+                                                                    ]
             });
 
             // Filter by status
