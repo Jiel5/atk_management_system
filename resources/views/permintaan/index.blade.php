@@ -165,7 +165,15 @@
                                                 </form>
                                             @endif
 
-                                            {{-- Tombol Batalkan untuk User --}}
+                                            {{-- Icon gembok untuk Bendahara jika status bukan menunggu --}}
+                                            @if(auth()->user()->role === 'bendahara' && $p->status !== 'menunggu')
+                                                <span class="btn btn-secondary btn-sm" disabled
+                                                    title="Permintaan sudah {{ $p->status }}">
+                                                    <i class="fas fa-lock"></i>
+                                                </span>
+                                            @endif
+
+                                            {{-- Tombol Batalkan untuk User jika status menunggu --}}
                                             @if(auth()->user()->role === 'user' && $p->status === 'menunggu')
                                                 <form action="{{ route('permintaan.batal', $p->id) }}" method="POST" class="d-inline"
                                                     onsubmit="return confirm('Yakin ingin membatalkan permintaan ini?')">
@@ -175,6 +183,14 @@
                                                         <i class="fas fa-times"></i> Batalkan
                                                     </button>
                                                 </form>
+                                            @endif
+
+                                            {{-- Icon gembok untuk User jika status bukan menunggu --}}
+                                            @if(auth()->user()->role === 'user' && $p->status !== 'menunggu')
+                                                <span class="btn btn-sm btn-outline-secondary rounded-pill px-3" disabled
+                                                    title="Permintaan sudah {{ $p->status }}">
+                                                    <i class="fas fa-lock me-1"></i> Terkunci
+                                                </span>
                                             @endif
                                         </div>
                                     </td>
