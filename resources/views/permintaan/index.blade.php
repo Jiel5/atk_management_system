@@ -161,8 +161,8 @@
                                                             <i class="fas fa-times"></i>
                                                         </button>
                                                     </form>
-                                                @elseif(auth()->user()->role === 'user' && $item->status === 'menunggu')
-                                                    <form action="{{ route('permintaan.batal', $item->id) }}" method="POST" class="d-inline"
+                                                @elseif(auth()->user()->role === 'user' && $p->status === 'menunggu')
+                                                    <form action="{{ route('permintaan.batal', $p->id) }}" method="POST" class="d-inline"
                                                         onsubmit="return confirm('Yakin ingin membatalkan permintaan ini?')">
                                                         @csrf
                                                         @method('DELETE')
@@ -279,7 +279,6 @@
             </form>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -299,7 +298,7 @@
                     @else
                             { orderable: false, targets: [0, 5, 6] } // No, Detail ATK, dan Aksi columns tidak bisa disort untuk non-user
                         @endif
-                                                            ]
+                                                                ]
             });
 
             // Filter by status
