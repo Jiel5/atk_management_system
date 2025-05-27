@@ -4,20 +4,45 @@
         <div class="card shadow-sm border-0 rounded-3">
             <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
                 <div>
-                    <h5 class="mb-0 fw-bold text-primary">Laporan Rincian Barang Persediaan</h5>
+                    <h5 class="mb-0 fw-bold text-primary">Laporan Rincian Bulanan</h5>
                     <small class="text-muted">Periode: {{ \Carbon\Carbon::parse($bulan)->startOfMonth()->format('d-m-Y') }}
                         s/d {{ \Carbon\Carbon::parse($bulan)->endOfMonth()->format('d-m-Y') }}</small>
                 </div>
                 <div class="d-flex">
                     <form method="GET" action="{{ route('laporan.export') }}" target="_blank" class="me-2">
-                        <input type="hidden" name="bulan" value="{{ $bulan }}">
+                        @php
+                            $selectedMonth = $bulan ? \Carbon\Carbon::parse($bulan)->month : now()->month;
+                            $selectedYear = $bulan ? \Carbon\Carbon::parse($bulan)->year : now()->year;
+                        @endphp
+                        <input type="hidden" name="bulan" value="{{ $selectedMonth }}">
+                        <input type="hidden" name="tahun" value="{{ $selectedYear }}">
                         <button class="btn btn-outline-secondary d-flex align-items-center">
                             <i class="bi bi-file-pdf me-2"></i> Export PDF
                         </button>
                     </form>
                     <form method="GET" action="{{ route('laporan.index') }}" class="d-flex">
-                        <input type="month" name="bulan" value="{{ $bulan }}"
-                            class="form-control rounded-start rounded-0 border-end-0">
+                        <select name="bulan" class="form-select rounded-0 border-end-0" style="max-width: 120px;">
+                            @php
+                                $currentMonth = $bulan ? \Carbon\Carbon::parse($bulan)->month : now()->month;
+                            @endphp
+                            @for($i = 1; $i <= 12; $i++)
+                                <option value="{{ $i }}" {{ $currentMonth == $i ? 'selected' : '' }}>
+                                    {{ \Carbon\Carbon::create()->month($i)->translatedFormat('F') }}
+                                </option>
+                            @endfor
+                        </select>
+                        <select name="tahun" class="form-select rounded-0 border-end-0" style="max-width: 100px;">
+                            @php
+                                $currentYear = $bulan ? \Carbon\Carbon::parse($bulan)->year : now()->year;
+                                $startYear = now()->year - 5;
+                                $endYear = now()->year + 1;
+                            @endphp
+                            @for($year = $startYear; $year <= $endYear; $year++)
+                                <option value="{{ $year }}" {{ $currentYear == $year ? 'selected' : '' }}>
+                                    {{ $year }}
+                                </option>
+                            @endfor
+                        </select>
                         <button class="btn btn-primary rounded-start-0"><i class="bi bi-search"></i></button>
                     </form>
                 </div>

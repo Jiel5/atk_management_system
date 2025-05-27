@@ -10,7 +10,13 @@ class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        $bulan = $request->input('bulan') ?? now()->format('Y-m'); // format: 2025-05
+        // Ambil bulan dan tahun dari request, default ke bulan/tahun sekarang
+        $bulanInput = $request->input('bulan') ?? now()->month;
+        $tahunInput = $request->input('tahun') ?? now()->year;
+
+        // Format untuk query database
+        $bulan = $tahunInput . '-' . str_pad($bulanInput, 2, '0', STR_PAD_LEFT); // format: 2025-05
+
         $tanggalAwal = Carbon::parse($bulan . '-01')->startOfMonth();
         $tanggalAkhir = Carbon::parse($bulan . '-01')->endOfMonth();
 
