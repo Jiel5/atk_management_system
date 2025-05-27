@@ -514,17 +514,4 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Better scroll behavior */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Improved focus states for accessibility */
-        .form-select:focus,
-        .btn:focus {
-            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-            border-color: #86b7fe;
-        }
-    </style>
 @endsection

@@ -26281,14 +26281,14 @@ dl li {
 
 .content-wrapper {
   background: #f2edf3;
-  padding: 1.5rem 0.5rem;
+  padding: 2.25rem 1.5rem;
   width: 100%;
   -webkit-flex-grow: 1;
   flex-grow: 1;
 }
 
 
-/* style custom */
+/* STYLE CUSTOM */
 
 .navbar-brand img {
     height: 60px !important;
@@ -26301,7 +26301,7 @@ dl li {
     margin-right: 0 !important;
 }
 
-/* Jangan ubah container dan content-wrapper */
+/* MODERN CARD STYLE */
 
 .modern-card {
     border: none;
@@ -26315,6 +26315,8 @@ dl li {
     transform: translateY(-3px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
+
+/* GRADIENT VARIANTS */
 
 .gradient-primary-modern {
     background: linear-gradient(135deg, #667eea, #764ba2);
@@ -26332,6 +26334,8 @@ dl li {
     background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
 }
 
+/* FINANCIAL CARD STYLE */
+
 .financial-card {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
@@ -26348,6 +26352,8 @@ dl li {
 .balance-card {
     background: linear-gradient(135deg, #4834d4, #686de0);
 }
+
+/* STATISTIK IKON & KARTU */
 
 .stat-icon {
     width: 45px;
@@ -26368,6 +26374,8 @@ dl li {
     background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
 }
 
+/* HEADER & BREADCRUMB */
+
 .page-header-modern {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
@@ -26383,6 +26391,8 @@ dl li {
     padding: 0.5rem 1rem;
     backdrop-filter: blur(10px);
 }
+
+/* DISPLAY ANGKA & JUDUL KARTU */
 
 .number-display {
     font-size: 2rem;
@@ -26403,7 +26413,8 @@ dl li {
     padding: 2rem;
 }
 
-/* Fixed stats grid - ensure 3 cards stay in one row */
+/* STATS GRID */
+
 .stats-grid {
     gap: 1rem;
 }
@@ -26414,7 +26425,8 @@ dl li {
     max-width: calc(33.333% - 0.67rem);
 }
 
-/* Responsive adjustments */
+/* RESPONSIVE */
+
 @media (max-width: 768px) {
     .stats-grid .col-stat {
         max-width: 100%;
@@ -26429,6 +26441,32 @@ dl li {
         width: 50px;
         height: 50px;
     }
+
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        width: 100%;
+    }
+
+    .row.g-3 .col-md-4 {
+        margin-bottom: 1rem;
+    }
+
+    .d-flex.gap-1 {
+        flex-direction: column;
+        gap: 0.25rem !important;
+    }
 }
 
 @media (min-width: 769px) {
@@ -26438,7 +26476,8 @@ dl li {
     }
 }
 
-/* Animations */
+/* ANIMATIONS */
+
 @keyframes slideInUp {
     from {
         opacity: 0;
@@ -26455,26 +26494,40 @@ dl li {
     animation: slideInUp 0.6s ease-out both;
 }
 
-.animate-delay-1 {
-    animation-delay: 0.1s;
+.animate-delay-1 { animation-delay: 0.1s; }
+.animate-delay-2 { animation-delay: 0.2s; }
+.animate-delay-3 { animation-delay: 0.3s; }
+.animate-delay-4 { animation-delay: 0.4s; }
+.animate-delay-5 { animation-delay: 0.5s; }
+.animate-delay-6 { animation-delay: 0.6s; }
+
+/* DATATABLES STYLING */
+
+.table tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.03);
+    transition: background-color 0.2s ease;
 }
 
-.animate-delay-2 {
-    animation-delay: 0.2s;
+.dataTables_wrapper {
+    padding-top: 1rem;
 }
 
-.animate-delay-3 {
-    animation-delay: 0.3s;
+.dataTables_wrapper .row {
+    margin-bottom: 0.75rem;
 }
 
-.animate-delay-4 {
-    animation-delay: 0.4s;
+.btn-sm:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
 }
 
-.animate-delay-5 {
-    animation-delay: 0.5s;
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 }
 
-.animate-delay-6 {
-    animation-delay: 0.6s;
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
 }
+
