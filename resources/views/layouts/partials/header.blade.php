@@ -4,7 +4,7 @@
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo">
         </a>
         <a class="navbar-brand brand-logo-mini" href="#" style="pointer-events: none;">
-            <img src="{{ asset('assets/images/logo-mini.png') }}" alt="logo" style="height: 40px; width: auto;">
+            <img src="{{ asset('assets/images/logo.jpeg') }}" alt="logo" style="height: 50px; width: auto;">
         </a>
     </div>
 
