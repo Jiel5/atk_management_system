@@ -1,133 +1,123 @@
 @extends('layouts.app')
+
 @section('content')
-    <div class="container py-4">
-        <div class="card shadow-sm border-0 rounded-3">
-            <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
-                <div>
-                    <h5 class="mb-0 fw-bold text-primary">Laporan Rincian Barang Persediaan</h5>
-                    <small class="text-muted">Periode: {{ \Carbon\Carbon::parse($bulan)->startOfMonth()->format('d-m-Y') }}
-                        s/d {{ \Carbon\Carbon::parse($bulan)->endOfMonth()->format('d-m-Y') }}</small>
-                </div>
-                <div class="d-flex">
-                    <form method="GET" action="{{ route('laporan.export') }}" target="_blank" class="me-2">
-                        <input type="hidden" name="bulan" value="{{ $bulan }}">
-                        <button class="btn btn-outline-secondary d-flex align-items-center">
-                            <i class="bi bi-file-pdf me-2"></i> Export PDF
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0 fw-bold text-primary">Laporan Rincian Barang Persediaan</h5>
+                <small class="text-muted">Periode: {{ $start->format('d-m-Y') }} s/d {{ $end->format('d-m-Y') }}</small>
+            </div>
+            <div class="d-flex">
+                <form method="GET" action="{{ route('laporan.rincian') }}" class="d-flex align-items-center me-2">
+                    <div class="input-group input-group-sm">
+                        <input type="date" name="start" id="start" class="form-control"
+                            value="{{ request('start', $start->format('Y-m-d')) }}">
+                        <span class="input-group-text bg-light">s/d</span>
+                        <input type="date" name="end" id="end" class="form-control"
+                            value="{{ request('end', $end->format('Y-m-d')) }}">
+                        <button type="submit" class="btn btn-primary px-3">
+                            Filter
                         </button>
-                    </form>
-                    <form method="GET" action="{{ route('laporan.index') }}" class="d-flex">
-                        <input type="month" name="bulan" value="{{ $bulan }}"
-                            class="form-control rounded-start rounded-0 border-end-0">
-                        <button class="btn btn-primary rounded-start-0"><i class="bi bi-search"></i></button>
-                    </form>
+                    </div>
+                </form>
+                <div>
+                    <a href="{{ route('laporan.rincian.export', ['start' => request('start', $start->format('Y-m-d')), 'end' => request('end', $end->format('Y-m-d'))]) }}"
+                        class="btn btn-sm btn-success me-1">
+                        Export PDF
+                    </a>
                 </div>
             </div>
-            <div class="card-body p-4">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="alert alert-light border-start border-5 border-primary mb-4 ps-4">
-                            <div class="d-flex align-items-center">
-                                <div class="fs-4 text-primary me-3"><i class="bi bi-box-arrow-in-down"></i></div>
-                                <div>
-                                    <span class="fs-6 text-muted">Total Pemasukan</span>
-                                    <h4 class="mb-0">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="alert alert-light border-start border-5 border-danger mb-4 ps-4">
-                            <div class="d-flex align-items-center">
-                                <div class="fs-4 text-danger me-3"><i class="bi bi-box-arrow-right"></i></div>
-                                <div>
-                                    <span class="fs-6 text-muted">Total Pengeluaran</span>
-                                    <h4 class="mb-0">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
 
-                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pemasukan-tab" data-bs-toggle="tab" data-bs-target="#pemasukan"
-                            type="button" role="tab">
-                            <i class="bi bi-box-arrow-in-down me-1"></i> Pemasukan
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pengeluaran-tab" data-bs-toggle="tab" data-bs-target="#pengeluaran"
-                            type="button" role="tab">
-                            <i class="bi bi-box-arrow-right me-1"></i> Pengeluaran
-                        </button>
-                    </li>
-                </ul>
+        <div class="card-body p-0">
+            <div class="table-responsive" id="report-container">
+                <table class="table table-bordered table-hover table-sm mb-0">
+                    <thead>
+                        <tr class="text-center bg-light">
+                            <th rowspan="2" class="align-middle border-end">KODE</th>
+                            <th rowspan="2" class="align-middle border-end">URAIAN</th>
+                            <th colspan="2" class="border-bottom border-end">S/D {{ $start->format('d-m-Y') }}</th>
+                            <th colspan="2" class="border-bottom border-end">MUTASI</th>
+                            <th colspan="2" class="border-bottom">S/D {{ $end->format('d-m-Y') }}</th>
+                        </tr>
+                        <tr class="text-center bg-light">
+                            <th class="border-end">JUMLAH</th>
+                            <th class="border-end">RUPIAH</th>
+                            <th class="border-end">MASUK</th>
+                            <th class="border-end">KELUAR</th>
+                            <th class="border-end">JUMLAH</th>
+                            <th>RUPIAH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $grandTotalAwal = $grandTotalMasuk = $grandTotalKeluar = $grandTotalAkhir = 0;
+                            $grandRupiahAwal = $grandRupiahAkhir = 0;
+                        @endphp
 
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="pemasukan" role="tabpanel">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Nama ATK</th>
-                                        <th>Jumlah</th>
-                                        <th>Satuan</th>
-                                        <th class="text-end">Total Biaya</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($pemasukan as $p)
-                                        <tr>
-                                            <td>{{ \Carbon\Carbon::parse($p->tanggal_masuk)->format('d/m/Y') }}</td>
-                                            <td>{{ $p->atk->nama_atk }}</td>
-                                            <td>{{ $p->jumlah }}</td>
-                                            <td>{{ $p->satuan->nama_satuan }}</td>
-                                            <td class="text-end">Rp {{ number_format($p->total_biaya, 0, ',', '.') }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center py-3 text-muted">Tidak ada data pemasukan</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                        @foreach($groupedData as $kategori => $items)
+                            {{-- Kategori Header --}}
+                            <tr class="bg-primary bg-opacity-10">
+                                <td colspan="8" class="fw-bold py-2">{{ strtoupper($kategori) }}</td>
+                            </tr>
 
-                    <div class="tab-pane fade" id="pengeluaran" role="tabpanel">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Nama ATK</th>
-                                        <th>Jumlah</th>
-                                        <th>Satuan</th>
-                                        <th class="text-end">Total Biaya</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($pengeluaran as $p)
-                                        <tr>
-                                            <td>{{ \Carbon\Carbon::parse($p->tanggal_keluar)->format('d/m/Y') }}</td>
-                                            <td>{{ $p->atk->nama_atk }}</td>
-                                            <td>{{ $p->jumlah }}</td>
-                                            <td>{{ $p->satuan->nama_satuan }}</td>
-                                            <td class="text-end">Rp
-                                                {{ number_format($p->jumlah * $p->harga_per_unit, 0, ',', '.') }}
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center py-3 text-muted">Tidak ada data pengeluaran</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                            @php
+                                $totalAwal = $totalMasuk = $totalKeluar = $totalAkhir = 0;
+                                $rupiahAwal = $rupiahAkhir = 0;
+                            @endphp
+
+                            @foreach($items as $row)
+                                <tr>
+                                    <td class="text-center">{{ $row['kode'] }}</td>
+                                    <td>{{ $row['nama'] }}</td>
+                                    <td class="text-end">{{ $row['saldo_awal_jumlah'] }}</td>
+                                    <td class="text-end">{{ number_format($row['nilai_awal'], 0, ',', '.') }}</td>
+                                    <td class="text-end">{{ $row['masuk'] }}</td>
+                                    <td class="text-end">{{ $row['keluar'] }}</td>
+                                    <td class="text-end">{{ $row['saldo_akhir_jumlah'] }}</td>
+                                    <td class="text-end">{{ number_format($row['nilai_akhir'], 0, ',', '.') }}</td>
+                                </tr>
+                                @php
+                                    $totalAwal += $row['saldo_awal_jumlah'];
+                                    $rupiahAwal += $row['nilai_awal'];
+                                    $totalMasuk += $row['masuk'];
+                                    $totalKeluar += $row['keluar'];
+                                    $totalAkhir += $row['saldo_akhir_jumlah'];
+                                    $rupiahAkhir += $row['nilai_akhir'];
+
+                                    $grandTotalAwal += $row['saldo_awal_jumlah'];
+                                    $grandRupiahAwal += $row['nilai_awal'];
+                                    $grandTotalMasuk += $row['masuk'];
+                                    $grandTotalKeluar += $row['keluar'];
+                                    $grandTotalAkhir += $row['saldo_akhir_jumlah'];
+                                    $grandRupiahAkhir += $row['nilai_akhir'];
+                                @endphp
+                            @endforeach
+
+                            {{-- Total per kategori --}}
+                            <tr class="bg-light fw-bold">
+                                <td colspan="2" class="text-end">TOTAL {{ strtoupper($kategori) }}</td>
+                                <td class="text-end">{{ $totalAwal }}</td>
+                                <td class="text-end">{{ number_format($rupiahAwal, 0, ',', '.') }}</td>
+                                <td class="text-end">{{ $totalMasuk }}</td>
+                                <td class="text-end">{{ $totalKeluar }}</td>
+                                <td class="text-end">{{ $totalAkhir }}</td>
+                                <td class="text-end">{{ number_format($rupiahAkhir, 0, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
+
+                        {{-- Grand Total --}}
+                        <tr class="bg-secondary bg-opacity-10 fw-bold">
+                            <td colspan="2" class="text-end">GRAND TOTAL</td>
+                            <td class="text-end">{{ $grandTotalAwal }}</td>
+                            <td class="text-end">{{ number_format($grandRupiahAwal, 0, ',', '.') }}</td>
+                            <td class="text-end">{{ $grandTotalMasuk }}</td>
+                            <td class="text-end">{{ $grandTotalKeluar }}</td>
+                            <td class="text-end">{{ $grandTotalAkhir }}</td>
+                            <td class="text-end">{{ number_format($grandRupiahAkhir, 0, ',', '.') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
