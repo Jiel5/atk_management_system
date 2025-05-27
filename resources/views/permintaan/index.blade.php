@@ -295,11 +295,11 @@
                 order: [[1, 'desc']], // Sort by tanggal (index 1) descending
                 columnDefs: [
                     @if(auth()->user()->role === 'user')
-                        { orderable: false, targets: [0, 5] } // No dan Detail ATK columns tidak bisa disort untuk user
+                        { orderable: false, targets: [0, 5, 6] } // No dan Detail ATK columns tidak bisa disort untuk user
                     @else
                             { orderable: false, targets: [0, 5, 6] } // No, Detail ATK, dan Aksi columns tidak bisa disort untuk non-user
                         @endif
-                                                        ]
+                                                            ]
             });
 
             // Filter by status
